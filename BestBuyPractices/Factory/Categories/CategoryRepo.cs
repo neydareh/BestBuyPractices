@@ -1,6 +1,5 @@
 ﻿using BestBuyPractices.Models;
 using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -26,9 +25,22 @@ namespace BestBuyPractices.Factory.Categories
                     departmentID = category.DepartmentID
                 });
         }
-        public void UpdateCategory(Category category)
+        public void UpdateCategoryName(string categoryName, int categoryID)
         {
-            throw new NotImplementedException();
+            _connection.Execute("UPDATE categories SET Name = @catName WHERE CategoryID = @catID",
+                new { 
+                    catName = categoryName,
+                    catID = categoryID
+                });
+        }
+        public void UpdateCategoryDepartmentID(int departmentID, int categoryID)
+        {
+            _connection.Execute("UPDATE categories SET DepartmentID = (@deptID) WHERE CategoryID = (@catID)",
+                new
+                {
+                    deptID = departmentID,
+                    catID = categoryID
+                });
         }
     }
 }

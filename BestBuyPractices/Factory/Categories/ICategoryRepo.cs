@@ -10,6 +10,7 @@ namespace BestBuyPractices.Factory.Categories
         //Create
         public void CreateCategory(Category category);
         //Update
-        public void UpdateCategory(Category category);
+        public void UpdateCategoryName(string categoryName, int categoryID);
+        public void UpdateCategoryDepartmentID(int departmentID, int categoryID);
     }
 }

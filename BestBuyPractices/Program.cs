@@ -6,10 +6,8 @@ using Microsoft.Extensions.Configuration;
 using BestBuyPractices.Factory.Categories;
 using System.Collections.Generic;
 using BestBuyPractices.Factory;
-using BestBuyPractices.Models;
 using Lamar;
 using Microsoft.Extensions.DependencyInjection;
-using BestBuyPractices.Factory.Departments;
 
 namespace BestBuyPractices
 {
@@ -18,8 +16,9 @@ namespace BestBuyPractices
         static void Main(string[] args)
         {
             var connection = GetConnection("appsettings.json", "DefaultConnection");
-            
-            var container = new Container( c => {
+
+            var container = new Container(c =>
+            {
                 c.AddTransient<IDbConnection>(x => 
                 {
                     return new MySqlConnection(connection.ConnectionString);
@@ -28,6 +27,9 @@ namespace BestBuyPractices
             });
 
             var categoryRepo = container.GetService<ICategoryRepo>();
+            categoryRepo.UpdateCategoryName("Mobile", 14);
+            categoryRepo.UpdateCategoryDepartmentID(2, 14);
+            //categoryRepo.CreateCategory(new Category() { DepartmentID = 3, Name = "Mobile Phone" });
 
             PrintBasicInfo(categoryRepo.GetCategories(), "Category");
             
