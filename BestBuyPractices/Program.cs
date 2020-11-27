@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using BestBuyPractices.Factory;
 using Lamar;
 using Microsoft.Extensions.DependencyInjection;
+using BestBuyPractices.Factory.Products;
+using BestBuyPractices.Models;
 
 namespace BestBuyPractices
 {
@@ -19,21 +21,20 @@ namespace BestBuyPractices
 
             var container = new Container(c =>
             {
-                c.AddTransient<IDbConnection>(x => 
+                c.AddSingleton<IDbConnection>(x => 
                 {
                     return new MySqlConnection(connection.ConnectionString);
                 });
                 c.AddTransient<ICategoryRepo, CategoryRepo>();
+                c.AddTransient<IProductRepo, ProductRepo>();
             });
 
             var categoryRepo = container.GetService<ICategoryRepo>();
-            categoryRepo.UpdateCategoryName("Mobile", 14);
-            categoryRepo.UpdateCategoryDepartmentID(2, 14);
-            //categoryRepo.CreateCategory(new Category() { DepartmentID = 3, Name = "Mobile Phone" });
+            var prodRepo = container.GetService<IProductRepo>();
+            //prodRepo.UpdateProductName("Hall of Justice", 947);
+            prodRepo.UpdateProductStockLevel(15, 947);
 
-            PrintBasicInfo(categoryRepo.GetCategories(), "Category");
-            
-            
+            PrintBasicInfo(prodRepo.GetAllProducts(), "Products");
         }
         public static void PrintBasicInfo(IEnumerable<ICallable> list, string header)
         {

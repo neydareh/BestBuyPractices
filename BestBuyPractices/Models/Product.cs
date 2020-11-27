@@ -1,6 +1,8 @@
-﻿namespace BestBuyPractices.Models
+﻿using BestBuyPractices.Factory;
+
+namespace BestBuyPractices.Models
 {
-    public class Product
+    public class Product : ICallable
     {
         public int ProductID { get; set; }
         public string Name { get; set; }
@@ -8,5 +10,6 @@
         public int CategoryID { get; set; }
         public int OnSale { get; set; }
         public int StockLevel { get; set; }
+        public int ID => ProductID;
     }
 }

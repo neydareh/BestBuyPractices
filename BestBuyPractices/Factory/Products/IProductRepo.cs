@@ -10,7 +10,9 @@ namespace BestBuyPractices.Factory.Products
         //Create
         public void CreateProduct(Product product);
         //Update
-        public void UpdateProduct(Product product);
+        public void UpdateProductName(string name, int id);
+        public void UpdateProductPrice(double price, int id);
+        public void UpdateProductStockLevel(int stockLevel, int id);
         //Delete
         public void DeleteProduct(int productID);
     }
