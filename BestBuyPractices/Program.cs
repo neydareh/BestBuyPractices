@@ -10,6 +10,7 @@ using Lamar;
 using Microsoft.Extensions.DependencyInjection;
 using BestBuyPractices.Factory.Products;
 using BestBuyPractices.Models;
+using BestBuyPractices.Factory.Reviews;
 
 namespace BestBuyPractices
 {
@@ -27,14 +28,23 @@ namespace BestBuyPractices
                 });
                 c.AddTransient<ICategoryRepo, CategoryRepo>();
                 c.AddTransient<IProductRepo, ProductRepo>();
+                c.AddTransient<IReviewRepo, ReviewRepo>();
             });
 
             var categoryRepo = container.GetService<ICategoryRepo>();
             var prodRepo = container.GetService<IProductRepo>();
-            //prodRepo.UpdateProductName("Hall of Justice", 947);
-            prodRepo.UpdateProductStockLevel(15, 947);
+            var reviewRepo = container.GetService<IReviewRepo>();
 
-            PrintBasicInfo(prodRepo.GetAllProducts(), "Products");
+            foreach (var item in reviewRepo.GetReviews())
+            {
+                Console.WriteLine($"Product Name: {item.Name}");
+                Console.WriteLine($"Reviewer: {item.Reviewer}");
+                Console.WriteLine($"Rating: {item.Rating}");
+                Console.WriteLine($"Comment: {item.Comment}");
+                Console.WriteLine();
+            }
+
+            //PrintBasicInfo(prodRepo.GetAllProducts(), "Products");
         }
         public static void PrintBasicInfo(IEnumerable<ICallable> list, string header)
         {
